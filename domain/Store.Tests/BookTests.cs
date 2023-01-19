@@ -5,7 +5,7 @@ namespace Store.Tests
 {
     public class BookTests
     {
-        [Fact]
+        [FactAttribute]
         public void IsIsbn_WithBlankString_ReturnFalse()
         {
             bool actual = Book.IsIsbn("   ");
