@@ -11,11 +11,29 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white">
             <a class="navbar-brand ml-5" asp-area="" asp-controller="Home" asp-action="Index">Интернет-магазин на C#</a>
+
+            <form class="form-inline my-2 my-lg-0" action="@Url.Action("Index", "Search")" method="get">
+                <input class="form-control mr-sm-2 ml-5" type="search" name="query" placeholder="автор или название" />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Искать</button>
+            </form>
+            <span class="navbar-text ml-5">
+                @{
+                    Cart cart;
+                    // Если не удалось прочитать данные из корзины, то создаем новую пустую корзину
+                    if (!Context.Session.TryGetCart(out cart))
+                        cart = new Cart();
+
+                    if (cart.Items.Count == 0)
+                    {
+                        @:Корзина пуста
+                    }
+                    else
+                    {
+                        @:Товаров @cart.Items.Count на сумму @cart.Amount
+                    }
+                }
+            </span>
         </nav>
-        <form class="form-inline my-2 my-lg-0" action="@Url.Action("Index", "Search")" method="get">
-            <input class="form-control mr-sm-2 ml-5" type="search" name="query" placeholder="автор или название" />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Искать</button>
-        </form>
     </header>
             
     <div class="container">
