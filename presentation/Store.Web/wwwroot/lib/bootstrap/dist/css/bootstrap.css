@@ -8058,6 +8058,10 @@ button.bg-dark:focus {
   margin-left: 3rem !important;
 }
 
+.ml-50 {
+    margin-left: 5rem !important;
+}
+
 .p-0 {
   padding: 0 !important;
 }
