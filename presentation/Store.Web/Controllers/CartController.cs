@@ -23,10 +23,12 @@ namespace Store.Web.Controllers
             if (!HttpContext.Session.TryGetCart(out cart))
                 cart = new Cart();
 
-            if (cart.Items.ContainsKey(id)){
+            if (cart.Items.ContainsKey(id))
+            {
                 cart.Items[id]++; 
             }
-            else{ 
+            else
+            { 
                 cart.Items[id] = 1;
             }
 
