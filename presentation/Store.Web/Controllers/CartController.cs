@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Store.Web.Models;
 
 namespace Store.Web.Controllers
@@ -28,7 +24,7 @@ namespace Store.Web.Controllers
                 cart.Items[id]++; 
             }
             else
-            { 
+            {
                 cart.Items[id] = 1;
             }
 

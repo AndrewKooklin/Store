@@ -38,7 +38,7 @@ namespace Store.Web
             if(session.TryGetValue(key, out byte[] buffer))
             {
                 using(var stream = new MemoryStream(buffer))
-                    using(var reader = new BinaryReader(stream, Encoding.UTF8, true))
+                using(var reader = new BinaryReader(stream, Encoding.UTF8, true))
                 {
                     value = new Cart();
 
