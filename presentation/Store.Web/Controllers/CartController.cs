@@ -17,8 +17,10 @@ namespace Store.Web.Controllers
             var book = bookRepository.GetById(id);
             Cart cart;
             if (!HttpContext.Session.TryGetCart(out cart))
+            {
                 cart = new Cart();
-
+            }
+               
             if (cart.Items.ContainsKey(id))
             {
                 cart.Items[id]++; 
