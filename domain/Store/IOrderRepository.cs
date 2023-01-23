@@ -8,7 +8,7 @@ namespace Store
     {
         Order Create();
 
-        Order GetById();
+        Order GetById(int orderId);
 
         void Update(Order order);
     }

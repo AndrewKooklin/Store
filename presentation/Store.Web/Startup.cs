@@ -1,6 +1,4 @@
 using System;
-using System.Data;
-using System.Data.SqlClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +31,7 @@ namespace Store.Web
 
             //services.AddTransient<IDbConnection, SqlConnection>();
             services.AddSingleton<IBookRepository, BookRepository>();
+            services.AddSingleton<IOrderRepository, OrderRepository>();
             services.AddSingleton<BookService>();
 
             //services.AddScoped<IDbConnection, SqlConnection>();

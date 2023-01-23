@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Store.Memory
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly List<Order> orders = new List<Order>();
 
@@ -25,7 +25,7 @@ namespace Store.Memory
 
         public void Update(Order order)
         {
-            throw new NotImplementedException();
+            ;
         }
     }
 }
