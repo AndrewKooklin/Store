@@ -20,11 +20,12 @@
                 @{ 
                     if(Context.Session.TryGetCart(out Cart cart) && cart.TotalCount > 0)
                     {
-                                <a href="@Url.Action("Index", "Order")">Товаров @cart.TotalCount на сумму @cart.TotalPrice</a>
+                                <a style="background-color: #ffeb3b" 
+                                   href="@Url.Action("Index", "Order")">Товаров @cart.TotalCount на сумму @cart.TotalPrice</a>
                     }
                     else
                     {
-                        @:Корзина пуста
+                        <span style="background-color:azure; color:#0c1770">Корзина пуста</span>
                     }
                 }
             </span>
