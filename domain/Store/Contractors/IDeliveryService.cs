@@ -6,7 +6,7 @@ namespace Store.Contractors
 {
     public interface IDeliveryService
     {
-        string Code { get; }
+        string UniqueCode { get; }
 
         string Title { get; }
 
