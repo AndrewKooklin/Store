@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Store.Contractors;
 using Store.Memory;
 
 namespace Store.Web
@@ -30,8 +31,11 @@ namespace Store.Web
             });
 
             //services.AddTransient<IDbConnection, SqlConnection>();
+            services.AddSingleton<IDeliveryService, PostamateDeliveryService>();
             services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSingleton<IOrderRepository, OrderRepository>();
+            services.AddSingleton<IPaymentService, CashPaymentService>();
+            //services.AddSingleton<INotificationService, DebugNotification>();
             services.AddSingleton<BookService>();
 
             //services.AddScoped<IDbConnection, SqlConnection>();
