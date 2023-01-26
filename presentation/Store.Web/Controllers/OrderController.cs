@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Text.RegularExpressions;
+using Store.Web.Contractors;
 
 namespace Store.Web.Controllers
 {
@@ -16,13 +17,15 @@ namespace Store.Web.Controllers
         private readonly IOrderRepository orderRepository;
         private readonly IEnumerable<IDeliveryService> deliveryServices;
         private readonly IEnumerable<IPaymentService> paymentServices;
+        private readonly IEnumerable<IWebContractorService> webContractorServices;
         //private readonly INotificationService notification;
 
         public OrderController(//OrderService orderService,
                                 IBookRepository bookRepository,
                                IOrderRepository orderRepository,
                                IEnumerable<IDeliveryService> deliveryServices,
-                               IEnumerable<IPaymentService> paymentServices
+                               IEnumerable<IPaymentService> paymentServices,
+                               IEnumerable<IWebContractorService> webContractorServices
                                //INotificationService notificationService
                                )
         {
@@ -31,6 +34,7 @@ namespace Store.Web.Controllers
             this.orderRepository = orderRepository;
             this.deliveryServices = deliveryServices;
             this.paymentServices = paymentServices;
+            this.webContractorServices = webContractorServices;
             //this.notificationService = notificationService;
         }
 
@@ -265,7 +269,7 @@ namespace Store.Web.Controllers
         [HttpPost]
         public IActionResult StartDelivery(int id, string uniqueCode)
         {
-            var deliveryService = deliveryServices.Single(service => service.UniqueCode);
+            var deliveryService = deliveryServices.Single(service => service.UniqueCode == uniqueCode);
 
             var order = orderRepository.GetById(id);
 
@@ -277,14 +281,14 @@ namespace Store.Web.Controllers
         [HttpPost]
         public IActionResult NextDelivery(int id, string uniqueCode, int step, Dictionary<string, string> values)
         {
-            var deliveryService = deliveryServices.Single(service => service.UniqueCode);
+            var deliveryService = deliveryServices.Single(service => service.UniqueCode == uniqueCode);
 
-            var form = deliveryService.MoveNext(id, step, values);
+            var form = deliveryService.MoveNextForm(id, step, values);
 
             if (form.IsFinal)
             {
                 var order = orderRepository.GetById(id);
-                order.Payment = deliveryService.GetPayment(form);
+                order.Delivery = deliveryService.GetDelivery(form);
                 orderRepository.Update(order);
 
                 var model = new DeliveryModel
@@ -303,11 +307,18 @@ namespace Store.Web.Controllers
         [HttpPost]
         public IActionResult StartPayment(int id, string uniqueCode)
         {
-            var paymentService = paymentServices.Single(service => service.UniqueCode);
+            var paymentService = paymentServices.Single(service => service.UniqueCode == uniqueCode);
 
             var order = orderRepository.GetById(id);
 
             var form = paymentService.CreateForm(order);
+
+            var webContractorService = webContractorServices.SingleOrDefault(service => service.UniqueCode == uniqueCode);
+
+            if(webContractorService != null)
+            {
+                return Redirect(webContractorService.GetUri);
+            }
 
             return View("PaymentStep", form);
         }
@@ -315,20 +326,27 @@ namespace Store.Web.Controllers
         [HttpPost]
         public IActionResult NextPayment(int id, string uniqueCode, int step, Dictionary<string, string> values)
         {
-            var paymentService = paymentServices.Single(service => service.UniqueCode);
+            var paymentService = paymentServices.Single(service => service.UniqueCode == uniqueCode);
 
-            var form = paymentService.MoveNext(id, step, values);
+            var form = paymentService.MoveNextForm(id, step, values);
 
             if (form.IsFinal)
             {
                 var order = orderRepository.GetById(id);
-                order.Delivery = paymentService.GetDelivery(form);
+                order.Payment = paymentService.GetPayment(form);
                 orderRepository.Update(order);
 
                 return View("Finish");
             }
 
             return View("PaymentStep", form);
+        }
+
+        public IActionResult Finish()
+        {
+            HttpContext.Session.RemoveCart();
+
+            return View();
         }
     }
 }
