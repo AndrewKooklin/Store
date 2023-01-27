@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Store.Contractors;
 using Store.Memory;
+using Store.Messages;
+using Store.Web.App;
 using Store.Web.Contractors;
 using Store.YandexKassa;
 
@@ -24,6 +26,7 @@ namespace Store.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -33,14 +36,16 @@ namespace Store.Web
             });
 
             //services.AddTransient<IDbConnection, SqlConnection>();
-            services.AddSingleton<IDeliveryService, PostamateDeliveryService>();
+            
             services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSingleton<IOrderRepository, OrderRepository>();
+            services.AddSingleton<INotificationService, DebugNotificationService>();
+            services.AddSingleton<IDeliveryService, PostamateDeliveryService>();
             services.AddSingleton<IPaymentService, CashPaymentService>();
             services.AddSingleton<IPaymentService, YandexKassaPaymentService>();
             services.AddSingleton<IWebContractorService, YandexKassaPaymentService>();
-            //services.AddSingleton<INotificationService, DebugNotification>();
             services.AddSingleton<BookService>();
+            services.AddSingleton<OrderService>();
 
             //services.AddScoped<IDbConnection, SqlConnection>();
             //services.AddSingleton<Func<IDbConnection>>(serviceProvider =>

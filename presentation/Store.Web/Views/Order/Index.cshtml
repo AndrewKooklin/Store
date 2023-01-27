@@ -43,3 +43,20 @@
         </tr>
     </tfoot>
 </table>
+
+<p>
+    Для оформления заказа необходимо подтвердить номер Вашего мобильного.
+    Введите номер и нажмите <em>Отправить код</em>. На Ваш номер будет отправлено SMS с кодом.
+</p>
+
+<form action="@Url.Action(nameof(OrderController.SendConfirmation))" method="post">
+    <div class="form-group">
+        <label for="cellPhone">Мобильный телефон</label>
+        <input type="text" class="form-control" name="cellPhone" placeholder="+79135865265" value=""/>
+        @if (Model.Errors.ContainsKey("cellPhone"))
+        {
+            <small class="form-text text-danger">@Model.Errors["cellPhone"]</small>
+        }
+    </div>
+    <button type="submit" class="btn btn-success">Отправить код</button>
+</form>
