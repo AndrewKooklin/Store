@@ -8,7 +8,7 @@
 <form action="@Url.Action(nameof(OrderController.StartDelivery))" method="post">
     <div class="form-group">
         <label for="code">Способ доставки</label>
-        <select class="form-control" name="uniqueCode">
+        <select class="form-control" name="serviceName">
             @foreach(var method in Model)
             {
                 <option value="@method.Key">@method.Value</option>

@@ -11,7 +11,7 @@ namespace Store.Contractors
         {
             {"1", "Москва" },
 
-            {"1", "Санкт-Петербург" },
+            {"2", "Санкт-Петербург" },
         };
 
         private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> postamates = new Dictionary<string, IReadOnlyDictionary<string, string>>

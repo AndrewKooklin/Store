@@ -171,7 +171,7 @@ namespace Store.Web.Controllers
 
             if (!form.IsFinal)
             {
-                return View("Paymenttep", form);
+                return View("PaymentStep", form);
             }
 
             var payment = paymentService.GetPayment(form);

@@ -37,7 +37,7 @@ namespace Store.Tests
         }
 
         [Fact]
-        public void Add_WithNonExistingItem_ThrowsInvalidOperationExeption()
+        public void Add_WithExistingItem_ThrowsInvalidOperationExeption()
         {
             var order = new Order(1, new[]
             {
