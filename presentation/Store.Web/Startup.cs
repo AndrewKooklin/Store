@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Store.Contractors;
+using Store.Data.EF;
 //using Store.Memory;
 using Store.Messages;
 using Store.Web.App;
@@ -36,9 +37,12 @@ namespace Store.Web
             });
 
             //services.AddTransient<IDbConnection, SqlConnection>();
-            
+
             //services.AddSingleton<IBookRepository, BookRepository>();
             //services.AddSingleton<IOrderRepository, OrderRepository>();
+            
+            services.AddEfRepositories(Configuration.GetConnectionString("Store"));
+
             services.AddSingleton<INotificationService, DebugNotificationService>();
             services.AddSingleton<IDeliveryService, PostamateDeliveryService>();
             services.AddSingleton<IPaymentService, CashPaymentService>();

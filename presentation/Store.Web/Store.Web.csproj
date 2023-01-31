@@ -5,12 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Users\bolt9\source\repos\Store\application\Store.Web.App\Store.Web.App.csproj" />
     <ProjectReference Include="..\..\domain\Store\Store.csproj" />
+    <ProjectReference Include="..\..\infrastructure\Store.Data.EF\Store.Data.EF.csproj" />
     <ProjectReference Include="..\..\infrastructure\Store.Memory\Store.Memory.csproj" />
     <ProjectReference Include="..\..\plugins\Store.YandexKassa\Store.YandexKassa.csproj" />
     <ProjectReference Include="..\Store.Web.Contractors\Store.Web.Contractors.csproj" />
