@@ -6,11 +6,11 @@ namespace Store
 {
     public class OrderDelivery
     {
-        public string UniqueCode { get; }
+        public string UnuqueCode { get; }
 
         public string Description { get; }
 
-        public decimal Amount { get; }
+        public decimal Price { get; }
 
         public IReadOnlyDictionary<string, string> Parameters { get; }
 
@@ -28,9 +28,9 @@ namespace Store
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
 
-            UniqueCode = uniqueCode;
+            UnuqueCode = uniqueCode;
             Description = description;
-            Amount = amount;
+            Price = amount;
             Parameters = parameters;
         }
 
