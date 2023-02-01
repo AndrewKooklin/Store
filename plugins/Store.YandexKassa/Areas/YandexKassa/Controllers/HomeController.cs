@@ -3,7 +3,7 @@ using Store.YandexKassa.Areas.YandexKassa.Models;
 
 namespace Store.YandexKassa.Areas.YandexKassa.Controllers
 {
-    //[Area("YandexKassa")]
+    [Area("YandexKassa")]
     public class HomeController : Controller
     {
         public IActionResult Index(int orderId, string returnUri)

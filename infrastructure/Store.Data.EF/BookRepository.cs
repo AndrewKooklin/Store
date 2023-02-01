@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+//using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,9 +8,14 @@ using System.Text;
 
 namespace Store.Data.EF
 {
-    public class BookRepository : IBookRepository
+    class BookRepository : IBookRepository
     {
         private readonly DbContextFactory dbContextFactory;
+
+        public BookRepository(DbContextFactory dbContextFactory)
+        {
+            this.dbContextFactory = dbContextFactory;
+        }
 
         public Book[] GetAllByIds(IEnumerable<int> bookIds)
         {
@@ -42,8 +48,10 @@ namespace Store.Data.EF
             var dbContext = dbContextFactory.Create(typeof(BookRepository));
 
             var parameter = new SqlParameter("@titleOrAuthor", titleOrAuthor);
-            return dbContext.Books.FromSqlRaw("SELECT * FROM Books WHERE CONTAINS((Author, Title), @titleOrAuthor)",
-                                                  parameter)
+
+            return dbContext.Books.Where(book => book.Author == titleOrAuthor)
+                                  //.FromSqlRaw("SELECT * FROM Books WHERE CONTAINS((Author, Title), @titleOrAuthor)",
+                                  //              parameter)
                                   .AsEnumerable()
                                   .Select(Book.Mapper.Map)
                                   .ToArray();
