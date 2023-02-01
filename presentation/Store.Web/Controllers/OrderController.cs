@@ -177,7 +177,7 @@ namespace Store.Web.Controllers
             var payment = paymentService.GetPayment(form);
             var model = orderService.SetPayment(payment);
 
-            return View("Finish", form);
+            return View("Finish", model);
         }
 
         //public IActionResult Finish()
